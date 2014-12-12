@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title> Movie Qoutes</title>
+    <link rel="stylesheet" type="text/css" href="/static/stylesheets/moviequotes.css">
+</head>
+<body>
+    <h1> Katya using Jinja2!!</h1>
+    <form action="/addquote" method="post">
+        <table>
+            <tr>
+               <td>Quote:</td>
+                <td><input type="text" name="quote"></td>
+            </tr>
+            <tr>
+                <td>Movie:</td>
+                <td><input type="text" name="movie"></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Submit" </td>
+            </tr>
+        </table>
+    </form>
+    <hr>
+<h1>Movie Quotes</h1>
+<ul>
+    {% for moviequote in moviequote_query %}
+    <li>
+        <b>{{moviequote.quote}}</b>
+        <div class ="movie"> - {{moviequote.movie }} </div>
+    </li>
+    {% endfor %}
+</ul>
+</body>
+</html>

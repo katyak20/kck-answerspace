@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AnswerSpace pupils</title>
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+
+ <link rel="stylesheet" type="text/css" href="/static/stylesheets/pupils.css">
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+<![endif]-->
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<div class="container">
+<div class="navbar-header">
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a class="navbar-brand" href="#" >Lesson</a>
+</div>
+<div class="navbar-collapse collapse">
+<ul class="nav navbar-nav">
+
+<li><a href="#questions">Questions</a></li>
+<li><a href="#plans">Lesson PLans</a></li>
+    <li><a id="add-pupil" data-toggle="modal" data-target="#insert-pupil-modal" href="#">Add Pupil</a></li>
+
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li><a id="toggle-edit" href="#">Edit</a></li>
+</ul>
+</div><!--/.nav-collapse -->
+</div>
+</div>
+
+<div class="container-fluid">
+	<div class="row-fluid" id="header">
+		<div class="span12">
+			<h1>Answer Space</h1>
+			<h2>Teacher Page</h2>
+		</div>	
+	</div> <!--end of header row -->
+	<div class="row-fluid" id="main">
+		<div class="span3">
+			<div class="well">
+				<p>Mrs Smith</p>
+				<p>St Trinian's</p>
+			</div>
+			<button class="btn btn-primary" id="SubmitComment">Logout</button>
+			<div>
+				&nbsp;&nbsp;
+			</div>	
+			<div class="well">
+				<h3>Class</h3>
+				Year 7 Ruby
+				&nbsp;&nbsp;
+				<h3>Lesson</h3>
+				Computational Thinking 1
+			</div>
+		</div>
+		<div class="span3">
+			<div class="well transparent"><button class="btn" id="question1Btn">What is computational thinking? 1</button></div>
+			<div class="well transparent"><button class="btn" id="Question2">What is computational thinking? 2</button></div>
+			<div class="well transparent"><button class="btn btn-small" id="Question3">What is computational thinking? 3</button></div>
+			<div class="well transparent"><button class="btn btn-small" id="Question4">What is computational thinking? 4</button></div>
+		</div>	
+		<div class="span3">
+			<div class="well transparent"><button class="btn btn-small" id="Question1">What is computational thinking? 5</button></div>
+			<div class="well transparent"><button class="btn btn-small" id="Question2">What is computational thinking? 6</button></div>
+			<div class="well transparent"><button class="btn btn-small" id="Question3">What is computational thinking? 7</button></div>
+			<div class="well transparent"><button class="btn btn-small" id="Question4">What is computational thinking? 8</button></div>
+		</div>
+		<div class="span3">
+			<div class="well transparent"><button class="btn btn-small" id="Question1">What is computational thinking? 9</button></div>
+			<div class="well transparent"><button class="btn btn-small" id="Question2">What is computational thinking? 10</button></div>
+			<div class="well transparent"><button class="btn btn-small" id="Question3">What is computational thinking? 11</button></div>
+			<div class="well transparent"><button class="btn btn-small" id="Question4">What is computational thinking? 12</button></div>
+			</div>				
+		</div>
+	</div>	
+</div><!--end of main row -->
+	<div class="row-fluid" id="footer">
+		<div class="span12">
+			<h6>(C) AnswerSpace</h6>
+		</div>	
+	</div><!-- /footer -->
+
+</div><!-- end of container -->
+
+<!-- Modal -->
+<div id="modalQuestions" class="modal container-fluid solid" role="dialog" data-width="760">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" >×</button>
+		<h3 id="myModalLabel">Choose where to direct question</h3>
+	</div>
+	<div class="modal-body">
+		<div class="row-fluid">
+			<div class="span12 well transparent">
+				<button class="span12 btn btn-large" data-dismiss="modal">Choose one student</button>
+			</div>
+			<div class="span12 well transparent">
+				<button class="span12 btn btn-large" data-dismiss="modal">Choose differentiated student</button>
+			</div>
+			<div class="span12 well transparent">
+				<button class="span12 btn btn-large" data-dismiss="modal">Ask everyone</button>
+			</div>
+		</div>	
+	</div><!-- end of modal body -->
+	<div class="modal-footer">
+		<button class="btn btn-primary" data-dismiss="modal"></button>
+	</div>
+</div><!-- end of choose question direction page -->	
+
+<!-- all scripts here -->
+	<script src="bootstrap/js/jquery.js"></script>
+	<script src="bootstrap/js/bootstrap.js"></script>
+	<script src="bootstrap/js/ASFunctions.js" type="text/javascript"></script>	
+<!-- end of scripts -->
+
+</body>
+</html>
