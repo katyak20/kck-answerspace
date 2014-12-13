@@ -19,6 +19,8 @@ handlers:
   script: admin.py
   login: admin
 
+#Main handler
 - url: /.*
   script: answerspace.application
+  login: required
 

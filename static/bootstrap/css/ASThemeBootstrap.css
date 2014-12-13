@@ -1,0 +1,40 @@
+/* Large desktop */
+@media (min-width: 1200px) { ... }
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) { ... }
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) { ... }
+/* Landscape phones and down */
+@media (max-width: 480px) { ... }
+body{
+	background-color:#00ff33;
+}
+
+h1{
+	text-align:center;
+}
+
+#footer{
+	text-align:center;
+}
+
+.solid{
+	background-color:#00ff33;
+}
+
+.transparent{
+	background-color:#00ff33;
+}	
+
+.off-left_hide {
+    display: block !important;
+    position: absolute !important;
+    left: -10000px !important;
+    top: -10000px !important;
+}
+
+.newsFeedComment{
+	list-style-type:none;
+	width:	100%;
+}
+

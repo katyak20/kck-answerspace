@@ -38,12 +38,29 @@ class Handler(webapp2.RequestHandler):
 #GENERIC_KEY used to group Pupils into an entity group
 PARENT_KEY = ndb.Key('Entity', "pupil_root")
 
-class LessonPage(webapp2.RequestHandler):
+class PupilPage(webapp2.RequestHandler):
   def get(self):
      # pupil_query = Pupil.query(ancestor=PARENT_KEY.order(-Pupil.level))
       pupil_query = Pupil.query(ancestor=PARENT_KEY).order(-Pupil.name)
       template = jinja_env.get_template("templates/pupil.html")
       self.response.out.write(template.render({"pupil_query": pupil_query}))
+
+
+class LessonPage(webapp2.RequestHandler):
+  def get(self):
+     # pupil_query = Pupil.query(ancestor=PARENT_KEY.order(-Pupil.level))
+     #  pupil_query = Pupil.query(ancestor=PARENT_KEY).order(-Pupil.name)
+     #  pupil_query = Pupil.query(ancestor=PARENT_KEY).order(-Pupil.name)
+      template = jinja_env.get_template("templates/index.html")
+      self.response.out.write(template.render())
+
+class QuestionPage(webapp2.RequestHandler):
+  def get(self):
+     # pupil_query = Pupil.query(ancestor=PARENT_KEY.order(-Pupil.level))
+     #  pupil_query = Pupil.query(ancestor=PARENT_KEY).order(-Pupil.name)
+     #  pupil_query = Pupil.query(ancestor=PARENT_KEY).order(-Pupil.name)
+      template = jinja_env.get_template("templates/question.html")
+      self.response.out.write(template.render())
 
 class InsertPupilAction(webapp2.RequestHandler):
     def post(self):
@@ -106,6 +123,8 @@ class DeletePupilAction(webapp2.RequestHandler):
 
 application = webapp2.WSGIApplication([
     ('/', LessonPage),
+    ('/pupils', PupilPage),
+    ('/questions', QuestionPage),
     ('/insertpupil', InsertPupilAction),
     ('/deletepupil', DeletePupilAction),
     ('/img', Thumbnailer),

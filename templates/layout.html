@@ -1,0 +1,51 @@
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">AnswerSpace</a>
+        </div>
+        <div class="navbar-collapse collapse">
+
+
+                {% set navigation_bar = [
+                ('/', 'lesson', 'Lesson'),
+                ('/questions', 'questions', 'Questions'),
+                ('/pupils', 'PupilPage', 'Pupils')
+                ] -%}
+                {% set dropdown_questions_menu =[
+                ('/questions', 'questions', 'Questions'),
+                ('/add_question', 'add_question', 'Add Question')
+                ] -%}
+                {% set active_page = active_page|default('lesson') -%}
+                ...
+                <ul class="nav navbar-nav">
+                    {% for href, id, caption in navigation_bar %}
+                    <li {% if id== active_page %} class="active" {% endif %}>
+                    {% if href=='/questions' %}
+                        <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="{{ href|e }}">{{ caption|e }}<b class="caret"></b></a>
+                        </li>
+
+                    {% else %}
+                        <a href="{{ href|e }}">{{ caption|e }}</a></li>
+                    {% endif %}
+
+                    {% endfor %}
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a id="toggle-edit" href="#">Edit</a></li>
+                </ul>
+
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</div>
+
+
