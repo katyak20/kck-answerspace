@@ -11,7 +11,10 @@ from google.appengine.api import images
 import jinja2
 import webapp2
 import logging
+
+from handlers import insert_handlers
 from models import *
+
 
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -23,6 +26,9 @@ jinja_env = jinja2.Environment(
 loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
 autoescape=True)
 
+
+def get_parent_key(user):
+    return ndb.Key("Entity", user.email().lower())
 
 class Handler(webapp2.RequestHandler):
     def write(self, *a, **kw):
@@ -36,64 +42,36 @@ class Handler(webapp2.RequestHandler):
         self.write(self.render_str(template, **kw))
 
 #GENERIC_KEY used to group Pupils into an entity group
-PARENT_KEY = ndb.Key('Entity', "pupil_root")
+
 
 class PupilPage(webapp2.RequestHandler):
   def get(self):
+      user = users.get_current_user()
      # pupil_query = Pupil.query(ancestor=PARENT_KEY.order(-Pupil.level))
-      pupil_query = Pupil.query(ancestor=PARENT_KEY).order(-Pupil.name)
+      pupil_query = Pupil.query(ancestor=get_parent_key(user)).order(-Pupil.name)
       template = jinja_env.get_template("templates/pupil.html")
       self.response.out.write(template.render({"pupil_query": pupil_query}))
 
 
-class LessonPage(webapp2.RequestHandler):
+class CurrentLessonPage(webapp2.RequestHandler):
   def get(self):
-     # pupil_query = Pupil.query(ancestor=PARENT_KEY.order(-Pupil.level))
-     #  pupil_query = Pupil.query(ancestor=PARENT_KEY).order(-Pupil.name)
-     #  pupil_query = Pupil.query(ancestor=PARENT_KEY).order(-Pupil.name)
+      user = users.get_current_user()
       template = jinja_env.get_template("templates/index.html")
       self.response.out.write(template.render())
 
 class QuestionPage(webapp2.RequestHandler):
   def get(self):
-     # pupil_query = Pupil.query(ancestor=PARENT_KEY.order(-Pupil.level))
-     #  pupil_query = Pupil.query(ancestor=PARENT_KEY).order(-Pupil.name)
-     #  pupil_query = Pupil.query(ancestor=PARENT_KEY).order(-Pupil.name)
-      template = jinja_env.get_template("templates/question.html")
+      user = users.get_current_user()
+      template = jinja_env.get_template("templates/questions.html")
       self.response.out.write(template.render())
 
-class InsertPupilAction(webapp2.RequestHandler):
-    def post(self):
-        if self.request.get("key"):
-            logging.info("URL safe = " + self.request.get("key"))
-            pupil_key = ndb.Key(urlsafe=self.request.get("key"))
-            logging.info("Sring rep of REAL key" + str(pupil_key))
-            pupil = pupil_key.get()
-            pupil.name = self.request.get("pupilName")
-            pupil.class_name = self.request.get("className")
-            pupil.level = self.request.get("level")
-            if self.request.get("avatar"):
-                logging.info("self.request.get(avatar " + self.request.get("avatar"))
-                avatar_image = images.resize(self.request.get("avatar"), 256, 256)
-                pupil.avatar = None
-                pupil.avatar = avatar_image
-            else:
-                avatar_image = None
-            pupil.put()
-        else:
-            logging.info("URL safe = " + self.request.get("key"))
-            if self.request.get("avatar"):
-                avatar_image = images.resize(self.request.get("avatar"), 256, 256)
-            else:
-                avatar_image = None
+class LessonsPage(webapp2.RequestHandler):
+  def get(self):
+      user = users.get_current_user()
+      lessons_query = Lesson.query(ancestor=get_parent_key(user)).order(Lesson.topic)
+      template = jinja_env.get_template("templates/lessons.html")
+      self.response.out.write(template.render({"lessons_query":lessons_query}))
 
-            new_pupil = Pupil(parent=PARENT_KEY,
-                              name = self.request.get("pupilName"),
-                              class_name = self.request.get("className"),
-                              level = self.request.get("level"),
-                              avatar = avatar_image)
-            new_pupil.put()
-        self.redirect(self.request.referer)
 
 class Thumbnailer(webapp2.RequestHandler):
     def get(self):
@@ -121,11 +99,25 @@ class DeletePupilAction(webapp2.RequestHandler):
         pupil_key.delete()
         self.redirect(self.request.referer)
 
+
+
+class DeleteLessonAction(webapp2.RequestHandler):
+    def post(self):
+        logging.info("From DELETE URL safe = " + self.request.get("key"))
+        lesson_key = ndb.Key(urlsafe=self.request.get("key"))
+        lesson_key.delete()
+        self.redirect(self.request.referer)
+
+
 application = webapp2.WSGIApplication([
-    ('/', LessonPage),
+    ('/', CurrentLessonPage),
     ('/pupils', PupilPage),
     ('/questions', QuestionPage),
-    ('/insertpupil', InsertPupilAction),
+    ('/lessons', LessonsPage),
+    ('/insertpupil', insert_handlers.InsertPupilAction),
+    ('/insertquestion', insert_handlers.InsertSingleQuestionAction),
     ('/deletepupil', DeletePupilAction),
+    ('/insertlesson', insert_handlers.InsertLessonAction),
+    ('/deletelesson', DeleteLessonAction),
     ('/img', Thumbnailer),
 ], debug=True)

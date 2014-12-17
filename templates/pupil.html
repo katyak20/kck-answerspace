@@ -2,16 +2,13 @@
 {% block title %}Pupils{% endblock %}
 {% block head %}
     {{ super() }}
-    <style type="text/css">
-        .important { color: #336699; }
-    </style>
+
 {% endblock %}
 {% block content %}
 
 
 {% set active_page = "pupil" %}
 
-<div class="container">
     <div class="table-wrapper">
 <table class="table table-striped">
      <thead>
@@ -51,7 +48,7 @@
 </tbody>
 </table>
 </div>
-</div>
+
 <!-- Modal -->
 <div class="modal fade" id="insert-pupil-modal" tabindex="-1" role="dialog" aria-labelledby="Insert Pupil" aria-hidden="true">
 <div class="modal-dialog">
@@ -124,8 +121,11 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<!-- Compiled and minified Bootstrap JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+{% endblock %}
+
+{% block footer %}
+    {{ super() }}
+
 <script src="/static/js/pupils.js"></script>
 {% endblock %}

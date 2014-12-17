@@ -1,18 +1,21 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
-<html lang="en">
-<html xmlns="http://www.w3.org/1999/xhtml">
+ <!DOCTYPE html>
+ <html lang="en">
 <head>
     {% block head %}
     <meta charset="utf-8">
+
+     <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AnswerSpace pupils</title>
+    <title>AnswerSpace</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-responsive.min.css">
 
     <link rel="stylesheet" type="text/css" href="/static/stylesheets/pupils.css">
 
@@ -23,19 +26,107 @@
     {% endblock %}
 </head>
 <body>
-{% include "/templates/layout.html" %}
-{% set active_page = "lesson" %}
-<div id="content">{% block content %}HaHA{% endblock %}</div>
-<div id="footer">
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">AnswerSpace</a>
+        </div>
+        <div class="navbar-collapse collapse">
+
+
+                {% set navigation_bar = [
+                ('/', 'lesson', 'Lesson'),
+                ('/questions', 'questions', 'Questions'),
+                ('/pupils', 'PupilPage', 'Pupils'),
+                ('/lessons', 'LessonsPage', 'Lessons')
+                ] -%}
+                {% set dropdown_questions_menu =[
+                ('/questions', 'questions', 'Questions'),
+                ('/add_question', 'add_question', 'Add Question')
+                ] -%}
+                {% set active_page = active_page|default('lesson') -%}
+                ...
+            <ul class="nav navbar-nav">
+                {% for href, id, caption in navigation_bar %}
+                    {% if href=='/questions' %}
+                <li {% if id == active_page %} class="dropdown active"{% else %} class="dropdown" {% endif %}>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="{{ href|e }}">{{ caption|e }}<b
+                            class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/questions">Questions</a></li>
+                        <li class="divider"></li>
+                        <li><a id="add-question" data-toggle="modal" data-target="#insert-question-modal" href="#">Add question</a></li>
+                    </ul>
+                </li>
+                {% elif href=='/pupils' %}
+                <li {% if id == active_page %} class="dropdown active"{% else %} class="dropdown" {% endif %}>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="{{ href|e }}">{{ caption|e }}<b
+                            class="caret"></b></a>
+                <ul class="dropdown-menu">
+                        <li><a href="/pupils">Pupils</a></li>
+                        <li class="divider"></li>
+                        <li><a id="add-pupil" data-toggle="modal" data-target="#insert-pupil-modal" href="#">Add pupil</a></li>
+
+                    </ul>
+                </li>
+                {% elif href=='/lessons' %}
+                <li {% if id == active_page %} class="dropdown active"{% else %} class="dropdown" {% endif %}>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="{{ href|e }}">{{ caption|e }}<b
+                            class="caret"></b></a>
+                <ul class="dropdown-menu">
+                        <li><a href="/lessons">Lessons</a></li>
+                        <li class="divider"></li>
+                        <li><a id="add-lesson" data-toggle="modal" data-target="#insert-lesson-modal" href="#">Add lesson</a></li>
+
+                    </ul>
+                </li>
+                {% else %}
+                <li {% if id== active_page %} class="active" {% endif %}>
+                <a href="{{ href|e }}">{{ caption|e }}</a></li>
+                {% endif %}
+
+
+                {% endfor %}
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li><a id="toggle-edit" href="#">Edit</a></li>
+            </ul>
+
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</div>
+
+<div class="container">
+      {% block content %}{% endblock %}
+      <br>
+      <h2>This is part of my base template</h2>
+</div>
+</body>
+
+
+
+{% block footer %}
+<footer>
+    <div class="container">
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <!-- Compiled and minified Bootstrap JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <scripts src="/static/bootstrap/js/bootstrap-dropdown.js"></scripts>
-    {% block footer %}
+
    <div class="span12">
 			<h6>(C) AnswerSpace</h6>
 		</div>
-    {% endblock %}
 </div>
+</footer>
+{% endblock %}
 </body>
+ </html>

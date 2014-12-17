@@ -40,7 +40,6 @@ rh.mq.enableButtons = function() {
       pupilName = $(this).find(".pupilName").html();
       className = $(this).find(".className").html();
       level = $(this).find(".level").html();
-     // avatar = $(this).find(".avatar").html();
       entityKey = $(this).find(".entity-key").html();
       console.log("Enttity key " + entityKey);
      // console.log("passed modalStaff");

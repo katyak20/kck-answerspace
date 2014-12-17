@@ -16,13 +16,16 @@ class Pupil(ndb.Model):
 class Lesson(ndb.Model):
     topic = ndb.StringProperty()
     criteria = ndb.StringProperty()
-    teacher_key = ndb.StringProperty()
+    class_name = ndb.StringProperty()
+    teacher_key = ndb.KeyProperty()
+    resource = ndb.BlobProperty()
 
 class Question(ndb.Model):
-    question_order = ndb.IntegerProperty()
-    level = ndb.StringProperty()
-    question_body = ndb.StringProperty()
+    question_number = ndb.IntegerProperty()
     lesson_key = ndb.KeyProperty(kind=Lesson)
+    question_level = ndb.StringProperty()
+    question_body = ndb.StringProperty()
+    question_instructions = ndb.StringProperty()
 
 class Teacher(ndb.Model):
     name = ndb.StringProperty()
