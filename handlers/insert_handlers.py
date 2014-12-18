@@ -43,27 +43,26 @@ def get_parent_key(user):
 class InsertSingleQuestionAction(webapp2.RequestHandler):
   def post(self):
     user = users.get_current_user()
-    #lesson_query = Lesson.query(get_parent_key(user)).fetch(1)
-    #lesson_key.get
-    lesson_key=ndb.Key(urlsafe='ahNkZXZ-a2NrLWFuc3dlcnNwYWNlci8LEgZFbnRpdHkiEHRlc3RAZXhhbXBsZS5jb20MCxIGTGVzc29uGICAgICAgMAKDA')
-    question_number = 1
+
+    urlsafe_lesson_key =self.request.get('lesson_key')
+
+    lesson_key=ndb.Key(urlsafe=self.request.get('lesson_key'))
+    question_number = 2
     question_level = self.request.get("questionLevel")
-    question_body = "What is resistance"
+    question_body = self.request.get("questionBody")
     question_instructions = self.request.get("questionInstructions")
 
     new_question_entry = Question(parent=lesson_key,
                                   question_number = question_number,
                                   lesson_key = lesson_key,
                                   question_level = question_level,
-                                  question_body = None
+                                  question_body = question_body,
+                                question_instructions = question_instructions
                                   )
     new_question_entry.put()
     logging.info("URL safe = " + lesson_key.urlsafe())
 
     self.redirect(self.request.referer)
-
-
-
 
 class InsertLessonAction(webapp2.RequestHandler):
     def post(self):
@@ -74,6 +73,7 @@ class InsertLessonAction(webapp2.RequestHandler):
             logging.info("Sring rep of REAL key" + str(lesson_key))
             lesson = lesson_key.get()
             lesson.topic = self.request.get("lessonTopic")
+            lesson.lesson_name = self.request.get("lessonName")
             lesson.criteria = self.request.get("lessonCriteria")
             if self.request.get("lessonResource"):
                #
@@ -88,6 +88,7 @@ class InsertLessonAction(webapp2.RequestHandler):
 
             new_lesson = Lesson(parent=get_parent_key(user),
                               topic = self.request.get("lessonTopic"),
+                              lesson_name = self.request.get("lessonName"),
                               criteria = self.request.get("lessonCriteria"),
                               resource = None)
             new_lesson.put()

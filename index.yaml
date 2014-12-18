@@ -15,8 +15,19 @@ indexes:
   properties:
   - name: topic
 
+- kind: Lesson
+  ancestor: yes
+  properties:
+  - name: topic
+  - name: lesson_name
+
 - kind: Pupil
   ancestor: yes
   properties:
   - name: name
     direction: desc
+
+- kind: Question
+  ancestor: yes
+  properties:
+  - name: question_number

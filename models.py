@@ -15,10 +15,10 @@ class Pupil(ndb.Model):
 
 class Lesson(ndb.Model):
     topic = ndb.StringProperty()
+    lesson_name = ndb.StringProperty()
     criteria = ndb.StringProperty()
-    class_name = ndb.StringProperty()
-    teacher_key = ndb.KeyProperty()
     resource = ndb.BlobProperty()
+    #teacher_key = ndb.KeyProperty(kind=Teacher)
 
 class Question(ndb.Model):
     question_number = ndb.IntegerProperty()
@@ -29,6 +29,7 @@ class Question(ndb.Model):
 
 class Teacher(ndb.Model):
     name = ndb.StringProperty()
+    school_name = ndb.StringProperty()
     school_class =ndb.StringProperty()
 
 

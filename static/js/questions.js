@@ -28,7 +28,8 @@ rh.mq.enableButtons = function() {
       $("#insert-question-modal input[name=key]").val("").prop("disabled", true);
       $('#insert-question-modal .modal-title').html('Add a question');
       $('#insert-question-modal button[type=submit]').html('Add question');
-      $("#insert-question-modal input[name=questionLevel]").val("");
+       $("#insert-question-modal input[name=questionLevel]").val("");
+      $("#insert-question-modal select[name=LessonName]").val("");
       $("#insert-question-modal input[name=questionBody]").val("");
       $("#insert-question-modal input[name=questionInstructions]").val("");
   });
@@ -36,13 +37,14 @@ rh.mq.enableButtons = function() {
    $('.edit-question').click( function() {
       $('#insert-question-modal .modal-title').html('Edit this question');
       $('#insert-question-modal button[type=submit]').html('Edit question');
+      lessonName = $(this).find(".lessonName").html();
       level = $(this).find(".questionLevel").html();
       body = $(this).find(".questionBody").html();
       instructions= $(this).find(".questionInstructions").html();
       entityKey = $(this).find(".entity-key").html();
       console.log("Entity key " + entityKey);
       $("#insert-question-modal input[name=key]").val(entityKey).prop("disabled", false);
-
+      $("#insert-question-modal select[name=lessonName]").val(lessonName);
       $("#insert-question-modal input[name=questionLevel]").val(level);
       $("#insert-question-modal input[name=questionBody]").val(body);
       $("#insert-question-modal input[name=questionInstructions]").val(instructions);

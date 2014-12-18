@@ -29,6 +29,7 @@ rh.mq.enableButtons = function() {
       $('#insert-lesson-modal .modal-title').html('Add a lesson');
       $('#insert-lesson-modal button[type=submit]').html('Add lesson');
       $("#insert-lesson-modal input[name=lessonTopic]").val("");
+      $("#insert-lesson-modal input[name=lessonName]").val("");
       $("#insert-lesson-modal input[name=lessonCriteria]").val("");
       $("#insert-lesson-modal input[name=lessonResource]").val("");
   });
@@ -37,12 +38,14 @@ rh.mq.enableButtons = function() {
       $('#insert-lesson-modal .modal-title').html('Edit this lesson');
       $('#insert-lesson-modal button[type=submit]').html('Edit lesson');
       topic = $(this).find(".lessonTopic").html();
+      lessonName = $(this).find(".lessonName").html();
       criteria = $(this).find(".lessonCriteria").html();
       entityKey = $(this).find(".entity-key").html();
       console.log("Entity key " + entityKey);
       $("#insert-lesson-modal input[name=key]").val(entityKey).prop("disabled", false);
 
       $("#insert-lesson-modal input[name=lessonTopic]").val(topic);
+       $("#insert-lesson-modal input[name=lessonName]").val(lessonName);
       $("#insert-lesson-modal input[name=lessonCriteria]").val(criteria);
       // $("#insert-lesson-modal input[name=lessonResource]").val(instructions);
 

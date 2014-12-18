@@ -110,46 +110,64 @@
 
 
 <!-- Lesson Modal -->
-<div class="modal fade" id="insert-lesson-modal" tabindex="-1" role="dialog" aria-labelledby="Insert Lesson" aria-hidden="true">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<button type="button" class="close" data-dismiss="modal">
-    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-<h4 class="modal-title" id="myModalLabel">Add lesson</h4>
-</div>
+<div class="modal fade" id="insert-lesson-modal" tabindex="-1" role="dialog" aria-labelledby="Insert Lesson"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add lesson</h4>
+            </div>
 
-<form action="/insertlesson" method="POST" class="form-horizontal" role="form" enctype="multipart/form-data">
-<div class="modal-body">
+            <form action="/insertlesson" method="POST" class="form-horizontal" role="form"
+                  enctype="multipart/form-data">
+                <div class="modal-body">
 
-<input type="text" class="hidden" id="key" name="key" placeholder="Entity Key">
+                    <input type="text" class="hidden" id="key" name="key" placeholder="Entity Key">
 
-<div class="form-group">
-<label for="topic-input" class="col-sm-2 control-label">Topic</label>
-<div class="col-sm-10">
-<input type="text" class="form-control" id="inputTopic" name="lessonTopic" placeholder="Lesson Topic">
-</div>
-</div>
-<div class="form-group">
-<label for="criteria-input" class="col-sm-2 control-label">Criteria</label>
-<div class="col-sm-10">
-<input type="text" class="form-control" id="inputCriteria" name="lessonCriteria" placeholder="Lesson Criteria">
-</div>
-</div>
-<div class="form-group">
-<label for="resource-input" class="col-sm-2 control-label">Resource</label>
-<div class="col-sm-10">
-<input type="file" class="form-control" id="inputResource" name="lessonResource" placeholder="path">
-</div>
-</div>
-</div>
-<div class="modal-footer">
-<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-<button type="submit" class="btn btn-primary">Add lesson</button>
-</div>
-</form>
-</div>
-</div>
+                    <div class="form-group">
+                        <label for="topic-input" class="col-sm-2 control-label">Topic</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputTopic" name="lessonTopic"
+                                   placeholder="Lesson Topic">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lesson-name-input" class="col-sm-2 control-label">Lesson Name</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputLessonName" name="lessonName"
+                                   placeholder="Lesson Name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="criteria-input" class="col-sm-2 control-label">Criteria</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputCriteria" name="lessonCriteria"
+                                   placeholder="Lesson Criteria">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="resource-input" class="col-sm-2 control-label">Resource</label>
+
+                        <div class="col-sm-10">
+                            <input type="file" class="form-control" id="inputResource" name="lessonResource"
+                                   placeholder="path">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add lesson</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <!--End Of Lesson Modal -->

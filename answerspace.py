@@ -14,6 +14,7 @@ import logging
 
 from handlers import insert_handlers
 from models import *
+import utils
 
 
 
@@ -56,14 +57,18 @@ class PupilPage(webapp2.RequestHandler):
 class CurrentLessonPage(webapp2.RequestHandler):
   def get(self):
       user = users.get_current_user()
+      lessons = utils.get_lessons(user)
       template = jinja_env.get_template("templates/index.html")
-      self.response.out.write(template.render())
+      self.response.out.write(template.render({'lessons': lessons,
+                                             'user_email': user.email(),
+                                             'logout_url': users.create_logout_url("/")}))
 
 class QuestionPage(webapp2.RequestHandler):
   def get(self):
       user = users.get_current_user()
+      questions = Question.query(ancestor=get_parent_key(user)).order(Question.question_number)
       template = jinja_env.get_template("templates/questions.html")
-      self.response.out.write(template.render())
+      self.response.out.write(template.render({'questions': questions}))
 
 class LessonsPage(webapp2.RequestHandler):
   def get(self):

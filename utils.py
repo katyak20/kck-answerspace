@@ -1,21 +1,35 @@
+import os
+import urllib
+import sys
+reload(sys)
+sys.setdefaultencoding("utf-8")
+
+from google.appengine.api import users
 from google.appengine.ext import ndb
+from google.appengine.api import images
+
+import jinja2
+import webapp2
+import logging
+from models import  *
 from models import Lesson, Question, Pupil, Teacher
 
 def get_parent_key(user):
   return ndb.Key("Entity", user.email().lower())
 
 def get_lessons(user):
-  lessons = Question.query(ancestor=get_parent_key(user)).fetch()
+
+  lessons = Lesson.query(ancestor=get_parent_key(user)).order(Lesson.topic)
   lessons_map = {}
   for lesson in lessons:
-    lessons_map[lesson.key] = lesson
+    lessons_map[lesson.key] = lesson.lesson_name
   return lessons, lessons_map
 
 def get_questions(user,  Lesson):
   questions = Question.query(ancestor=get_parent_key(user)).order(Question.question_order).fetch()
   questions_map = {}
   for question in questions:
-    questions_map[question.key] = question
+    questions_map[question.key()] = question
   return questions, questions_map
 
 def get_pupils(user):

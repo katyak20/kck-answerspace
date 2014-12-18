@@ -9,35 +9,43 @@
 {% block content %}
 
  <article>
-HaHa
-{%for lesson in lessons_query %}
+{%for question in questions %}
      <div class="panel panel-info">
-         <div class="panel-heading"> {{lesson.topic }}</div>
+         <div class="panel-heading">
+             <table class="table">
+
+                 <tbody>
+                 <tr>
+                     <td>{{question.question_body}}</td>
+                 <td style="text-align:right;"><span class="badge">Level : {{question.question_level}}</span></td>
+                 </tr>
+
+                 </tbody>
+             </table>
+         </div>
+
          <div class="panel-body">
 
              <table class="table table-striped">
 
                  <tbody>
                  <tr>
-                     <td>{{lesson.criteria}}</td>
+                     <td>{{question.question_instructions}}</td>
+
                      <td class="edit-actions" style="text-align:right;">
 
-
-                         <button data-toggle="modal" data-target="#insert-question-modal" type="button"
+                         <button data-toggle="modal" data-target="#insert-lesson-modal" type="button"
                                  class="edit-lesson btn btn-xs btn-success">
                              <span class="glyphicon glyphicon-pencil"></span>
 
-                             <div class="hidden entity-key">{{lesson.key.urlsafe() }}</div>
-                             <div class="hidden lessonTopic">{{ lesson.topic }}</div>
-                             <div class="hidden lessonCriteria">{{ lesson.criteria }}</div>
-                             <div class="hidden lesson Resource">{{lesson.resource }}</div>
+                             <div class="hidden entity-key">{{question.key.urlsafe() }}</div>
 
                          </button>
                          <button data-toggle="modal" data-target="#delete-lesson-modal" type="button"
                                  class="delete-lesson btn btn-xs btn-danger">
                              <span class="glyphicon glyphicon-remove"></span>
 
-                             <div class="hidden entity-key">{{lesson.key.urlsafe() }}</div>
+                             <div class="hidden entity-key">{{question.key.urlsafe() }}</div>
                          </button>
                      </td>
                  </tr>
@@ -55,49 +63,68 @@ HaHa
 
 
 
-
 <!-- Question Modal -->
-<div class="modal fade" id="insert-question-modal" tabindex="-1" role="dialog" aria-labelledby="Insert Question" aria-hidden="true">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<button type="button" class="close" data-dismiss="modal">
-    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-<h4 class="modal-title" id="myModalLabel">Add lesson</h4>
-</div>
+<div class="modal fade" id="insert-question-modal" tabindex="-1" role="dialog" aria-labelledby="Insert Question"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add question</h4>
+            </div>
 
-<form action="/insertquestion" method="POST" class="form-horizontal" role="form" enctype="multipart/form-data">
-<div class="modal-body">
+            <form action="/insertquestion" method="POST" class="form-horizontal" role="form"
+                  enctype="multipart/form-data">
+                <div class="modal-body">
 
-<input type="text" class="hidden" id="key" name="key" placeholder="Entity Key">
+                    <input type="text" class="hidden" id="key" name="key" placeholder="Entity Key">
 
-<div class="form-group">
-<label for="level-input" class="col-sm-2 control-label">Level</label>
-<div class="col-sm-10">
-<input type="text" class="form-control" id="inputLevel" name="questionLevel" placeholder="Question Level">
-</div>
-</div>
-<div class="form-group">
-<label for="question-body-input" class="col-sm-2 control-label">Body</label>
-<div class="col-sm-10">
-<input type="text" class="form-control" id="questionBody" name="questionBody" placeholder="Question Body">
-</div>
-</div>
-<div class="form-group">
-<label for="instructions-input" class="col-sm-2 control-label">Instructions</label>
-<div class="col-sm-10">
-    <textarea rows="4" cols="50" class="form-control" id="questionInstructions" name="questionInstructions"></textarea>
+                    <div class="form-group">
+                        <label for="lesson-input" class="col-sm-2 control-label">Lesson</label>
 
-</div>
-</div>
-</div>
-<div class="modal-footer">
-<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-<button type="submit" class="btn btn-primary">Add question</button>
-</div>
-</form>
-</div>
-</div>
+                        <div class="col-sm-10">
+                            <select name="lesson_key" class="form-control">
+                                {% for lesson in lessons %}
+                                <option value="{{ lesson.key.urlsafe() }}">{{lesson.lesson_name}}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="level-input" class="col-sm-2 control-label">Level</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputLevel" name="questionLevel"
+                                   placeholder="Question Level">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="question-body-input" class="col-sm-2 control-label">Body</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="questionBody" name="questionBody"
+                                   placeholder="Question Body">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="instructions-input" class="col-sm-2 control-label">Instructions</label>
+
+                        <div class="col-sm-10">
+                            <textarea rows="4" cols="50" class="form-control" id="questionInstructions"
+                                      name="questionInstructions"></textarea>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add question</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <!--End Of Question Modal -->
@@ -126,14 +153,10 @@ HaHa
 </div><!-- /.modal -->
 
 
-
-
-
 </body>
 </html>
 
 {% endblock %}
-
 {% block footer %}
     {{ super() }}
 
