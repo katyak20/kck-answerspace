@@ -4,6 +4,7 @@ rh.mq = rh.mq || {};
 
 /** Tracks the editing state */
 rh.mq.editing = false;
+rh.mq.currentLessonKey = null;
 
 rh.mq.attachEventHandlers = function() {
     $('#insert-question-modal').on('shown.bs.modal', function(){
@@ -60,12 +61,42 @@ rh.mq.enableButtons = function() {
       $("#delete-question-modal input[name=key]").val(entityKey).prop("disabled", false);
   });
 
-
-
 };
+
+rh.mq.updatePageTitle = function() {
+	newName = $("#" + rh.mq.currentLessonKey).find(".lesson-name").html();
+	if (newName) {
+	    console.log(newName);
+		$("#lesson-name").html(newName);
+	} else {
+		$("#lesson-name").html("All Lessons");
+	}
+};
+
+rh.mq.updateTable = function() {
+	//var table = $('#grade-entry-table').DataTable();
+//	table.search(rh.mq.currentAssignmentKey).draw();
+//	$("input[type=search]").val("");
+};
+
+
 /** main */
 
 $(document).ready( function() {
     rh.mq.enableButtons();
     rh.mq.attachEventHandlers();
+    rh.mq.currentLessonKey = $('.sidebar-link.active').attr('id');
+    console.log( " HaHa" + $('.sidebar-link.active').attr('id'));
+
+	$('.sidebar-link').click(function() {
+	    rh.mq.updatePageTitle();
+		// Update the sidebar
+		$('.sidebar-link').removeClass('active');
+		$(this).addClass('active');
+		// Update the list of grades shown in the table.
+		rh.mq.currentLessonKey = $(this).attr('id');
+
+		$(".row-offcanvas").removeClass("active");
+		rh.mq.updatePageTitle();
+    });
 });

@@ -57,7 +57,7 @@ class PupilPage(webapp2.RequestHandler):
 class CurrentLessonPage(webapp2.RequestHandler):
   def get(self):
       user = users.get_current_user()
-      lessons = utils.get_lessons(user)
+      lessons, lessons_map = utils.get_lessons(user)
       template = jinja_env.get_template("templates/index.html")
       self.response.out.write(template.render({'lessons': lessons,
                                              'user_email': user.email(),
@@ -66,9 +66,26 @@ class CurrentLessonPage(webapp2.RequestHandler):
 class QuestionPage(webapp2.RequestHandler):
   def get(self):
       user = users.get_current_user()
+      lesson_badge_data = {}
       questions = Question.query(ancestor=get_parent_key(user)).order(Question.question_number)
+      lessons, lessons_map = utils.get_lessons(user)
+      question_entries = utils.get_question_entries(user, lessons_map)
+      for lesson in lessons:
+        lesson_badge_data[lesson.key] = [0, 0]  # Accumulator for [Total Count, Total Score]
+      for question in questions:
+        lesson_badge_data[question.lesson_key][0] += 1
+      for lesson in lessons:
+        metadata = lesson_badge_data[lesson.key]
+        if metadata[0] > 0:
+          metadata.append(metadata[1] / metadata[0])  # Average = Total Score / Total Count
+        else:
+          metadata.append("na")  # Average is NA
       template = jinja_env.get_template("templates/questions.html")
-      self.response.out.write(template.render({'questions': questions}))
+      self.response.out.write(template.render({'questions': questions,
+                                               'question_entries': question_entries,
+                                               "lessons":lessons,
+                                               'active_lesson': self.request.get('active_lesson'),
+                                               'lesson_badge_data':lesson_badge_data}))
 
 class LessonsPage(webapp2.RequestHandler):
   def get(self):

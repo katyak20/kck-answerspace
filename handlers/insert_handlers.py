@@ -43,7 +43,6 @@ def get_parent_key(user):
 class InsertSingleQuestionAction(webapp2.RequestHandler):
   def post(self):
     user = users.get_current_user()
-
     urlsafe_lesson_key =self.request.get('lesson_key')
 
     lesson_key=ndb.Key(urlsafe=self.request.get('lesson_key'))
@@ -57,7 +56,7 @@ class InsertSingleQuestionAction(webapp2.RequestHandler):
                                   lesson_key = lesson_key,
                                   question_level = question_level,
                                   question_body = question_body,
-                                question_instructions = question_instructions
+                                  question_instructions = question_instructions
                                   )
     new_question_entry.put()
     logging.info("URL safe = " + lesson_key.urlsafe())

@@ -9,54 +9,81 @@
 {% block content %}
 
  <article>
-{%for question in questions %}
-     <div class="panel panel-info">
-         <div class="panel-heading">
-             <table class="table">
+     <div class="row row-offcanvas row-offcanvas-right">
+         <div class="col-xs-12 col-sm-9">
+             <div id="above-table-row" class="clearfix">
+                 <span id="lesson-name" class="h2">All Lessons</span>
 
-                 <tbody>
-                 <tr>
-                     <td>{{question.question_body}}</td>
-                 <td style="text-align:right;"><span class="badge">Level : {{question.question_level}}</span></td>
-                 </tr>
+             </div>
 
-                 </tbody>
-             </table>
+             {%for question in question_entries %}
+             <div class="panel panel-info">
+                 <div class="panel-heading">
+                     <p> {{question.lesson}}</p>
+                     <table class="table">
+
+                         <tbody>
+                         <tr>
+                             <td>{{question.question_body}}</td>
+                             <td style="text-align:right;"><span
+                                     class="badge">Level : {{question.question_level}}</span></td>
+                         </tr>
+
+                         </tbody>
+                     </table>
+                 </div>
+
+                 <div class="panel-body">
+
+                     <table class="table table-striped">
+
+                         <tbody>
+                         <tr>
+                             <td>{{question.question_instructions}}</td>
+
+                             <td class="edit-actions" style="text-align:right;">
+
+                                 <button data-toggle="modal" data-target="#insert-lesson-modal" type="button"
+                                         class="edit-lesson btn btn-xs btn-success">
+                                     <span class="glyphicon glyphicon-pencil"></span>
+
+                                     <div class="hidden entity-key">{{question.key.urlsafe() }}</div>
+
+                                 </button>
+                                 <button data-toggle="modal" data-target="#delete-lesson-modal" type="button"
+                                         class="delete-lesson btn btn-xs btn-danger">
+                                     <span class="glyphicon glyphicon-remove"></span>
+
+                                     <div class="hidden entity-key">{{question.key.urlsafe() }}</div>
+                                 </button>
+                             </td>
+                         </tr>
+
+                         </tbody>
+                     </table>
+
+                 </div>
+             </div>
+             {% endfor %}
+
          </div>
 
-         <div class="panel-body">
+     <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+        <div id="lesson-sidebar" class="list-group">
+          <a href="#" id="" class="sidebar-link list-group-item {% if not active_lesson %}active{% endif %}">Show all lessons</a>
+          {% for lesson in lessons %}
+            <a href="#" id="{{ lesson.key.urlsafe() }}" class="clearfix sidebar-link list-group-item {% if active_lesson == lesson.key.urlsafe() %}active{% endif %}">
+              <span class="badge">
+                {{ lesson_badge_data[lesson.key][0] }}
+              </span>
 
-             <table class="table table-striped">
+              <span class="lesson-name">{{lesson.lesson_name}}</span>
 
-                 <tbody>
-                 <tr>
-                     <td>{{question.question_instructions}}</td>
-
-                     <td class="edit-actions" style="text-align:right;">
-
-                         <button data-toggle="modal" data-target="#insert-lesson-modal" type="button"
-                                 class="edit-lesson btn btn-xs btn-success">
-                             <span class="glyphicon glyphicon-pencil"></span>
-
-                             <div class="hidden entity-key">{{question.key.urlsafe() }}</div>
-
-                         </button>
-                         <button data-toggle="modal" data-target="#delete-lesson-modal" type="button"
-                                 class="delete-lesson btn btn-xs btn-danger">
-                             <span class="glyphicon glyphicon-remove"></span>
-
-                             <div class="hidden entity-key">{{question.key.urlsafe() }}</div>
-                         </button>
-                     </td>
-                 </tr>
-
-                 </tbody>
-             </table>
-
-         </div>
-     </div>
-{% endfor %}
-
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+</div>
 
 
 </article>
@@ -86,7 +113,7 @@
                         <div class="col-sm-10">
                             <select name="lesson_key" class="form-control">
                                 {% for lesson in lessons %}
-                                <option value="{{ lesson.key.urlsafe() }}">{{lesson.lesson_name}}
+                                <option value="{{ lesson.key.urlsafe() }}">{{lesson.topic}} : {{lesson.lesson_name}}
                                 </option>
                                 {% endfor %}
                             </select>

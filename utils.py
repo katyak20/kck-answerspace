@@ -25,6 +25,15 @@ def get_lessons(user):
     lessons_map[lesson.key] = lesson.lesson_name
   return lessons, lessons_map
 
+def get_question_entries(user, lessons_map):
+  """ Gets all of the grade entries for this user.
+        Replaces the assignment_key and student_key with an assignment and student. """
+  question_entries = Question.query(ancestor=get_parent_key(user)).fetch() # TODO: Query for all QuestionEntries for this user, then fetch()
+  for question_entry in question_entries:
+    question_entry.lesson = lessons_map[question_entry.lesson_key]
+  return question_entries
+
+
 def get_questions(user,  Lesson):
   questions = Question.query(ancestor=get_parent_key(user)).order(Question.question_order).fetch()
   questions_map = {}
