@@ -16,7 +16,7 @@ rh.mq.enableButtons = function() {
     if (rh.mq.editing) {
         rh.mq.editing = false;
         $('.edit-actions').addClass('hidden');
-        $(this).html('Edit');
+        $(this).html('Pupils edits');
     } else {
         rh.mq.editing = true;
         $('.edit-actions').removeClass('hidden');

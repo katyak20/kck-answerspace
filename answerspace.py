@@ -51,7 +51,8 @@ class PupilPage(webapp2.RequestHandler):
      # pupil_query = Pupil.query(ancestor=PARENT_KEY.order(-Pupil.level))
       pupil_query = Pupil.query(ancestor=get_parent_key(user)).order(-Pupil.name)
       template = jinja_env.get_template("templates/pupil.html")
-      self.response.out.write(template.render({"pupil_query": pupil_query}))
+      self.response.out.write(template.render({"pupil_query": pupil_query,
+                                              'user_email': user.email()}))
 
 
 class CurrentLessonPage(webapp2.RequestHandler):
@@ -81,7 +82,8 @@ class QuestionPage(webapp2.RequestHandler):
         else:
           metadata.append("na")  # Average is NA
       template = jinja_env.get_template("templates/questions.html")
-      self.response.out.write(template.render({'questions': questions,
+      self.response.out.write(template.render({'user_email': user.email(),
+                                               'questions': questions,
                                                'question_entries': question_entries,
                                                "lessons":lessons,
                                                'active_lesson': self.request.get('active_lesson'),
@@ -92,7 +94,8 @@ class LessonsPage(webapp2.RequestHandler):
       user = users.get_current_user()
       lessons_query = Lesson.query(ancestor=get_parent_key(user)).order(Lesson.topic)
       template = jinja_env.get_template("templates/lessons.html")
-      self.response.out.write(template.render({"lessons_query":lessons_query}))
+      self.response.out.write(template.render({'user_email': user.email(),
+                                              "lessons_query":lessons_query}))
 
 
 class Thumbnailer(webapp2.RequestHandler):

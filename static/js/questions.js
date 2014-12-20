@@ -17,7 +17,7 @@ rh.mq.enableButtons = function() {
     if (rh.mq.editing) {
         rh.mq.editing = false;
         $('.edit-actions').addClass('hidden');
-        $(this).html('Edit');
+        $(this).html('Questions edits');
     } else {
         rh.mq.editing = true;
         $('.edit-actions').removeClass('hidden');
@@ -48,7 +48,7 @@ rh.mq.enableButtons = function() {
       $("#insert-question-modal select[name=lessonName]").val(lessonName);
       $("#insert-question-modal input[name=questionLevel]").val(level);
       $("#insert-question-modal input[name=questionBody]").val(body);
-      $("#insert-question-modal input[name=questionInstructions]").val(instructions);
+      $("#insert-question-modal textarea[name=questionInstructions]").val(instructions);
 
 
       console.log("passed modalStaff");

@@ -8,48 +8,77 @@
 
 
 {% set active_page = "pupil" %}
+<article></article>
+<div class="row row-offcanvas row-offcanvas-right">
+    <div class="col-xs-12 col-sm-9">
+        <div id="above-table-row" class="clearfix">
+            <span id="lesson-name" class="h2">All pupils</span>
+            <button id="toggle-edit"  class="btn btn-success pull-right" type="button">Pupils edits</button>
+        </div>
+        <div class="table-wrapper">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Class</th>
+                    <th>Level</th>
+                    <th>Image</th>
+                    <th class="hidden edit-actions">Edits</th>
+                </tr>
+                </thead>
+                <tbody>
+                {%for item in pupil_query %}
+                <tr>
+                    <td>{{item.name}}</td>
+                    <td>{{item.class_name}}</td>
+                    <td>{{item.level}}</td>
+                    <td><img src="/img?img_id={{item.key.urlsafe()}}"/></td>
+                    <td class="hidden edit-actions">
 
-    <div class="table-wrapper">
-<table class="table table-striped">
-     <thead>
-<tr>
-<th>#</th>
-<th>Class</th>
-<th>Level</th>
-<th>Image</th>
-<th class="hidden edit-actions">Edits</th>
-</tr>
-</thead>
-<tbody>
- {%for item in pupil_query %}
-    <tr>
-    <td>{{item.name}}</td>
-    <td>{{item.class_name}}</td>
-    <td>{{item.level}}</td>
-    <td><img src="/img?img_id={{item.key.urlsafe()}}"/></td>
-    <td class="hidden edit-actions">
 
+                        <button data-toggle="modal" data-target="#insert-pupil-modal" type="button"
+                                class="edit-pupil btn btn-xs btn-success">
+                            <span class="glyphicon glyphicon-pencil"></span>
 
-        <button data-toggle="modal" data-target="#insert-pupil-modal" type="button" class="edit-pupil btn btn-xs btn-success">
-         <span class="glyphicon glyphicon-pencil"></span>
-         <div class="hidden entity-key">{{item.key.urlsafe() }}</div>
-         <div class="hidden pupilName">{{item.name }}</div>
-         <div class="hidden className">{{item.class_name}}</div>
-         <div class="hidden level">{{item.level }}</div>
-         <div class="hidden avatar"><img src="/img?img_id={{item.key.urlsafe()}}"/></div>
-        </button>
-        <button  data-toggle="modal" data-target="#delete-pupil-modal" type="button" class="delete-pupil btn btn-xs btn-danger">
-         <span class="glyphicon glyphicon-remove"></span>
-            <div class="hidden entity-key">{{item.key.urlsafe() }}</div>
-        </button>
-    </td>
-    </tr>
-{% endfor %}
-</tbody>
-</table>
-</div>
+                            <div class="hidden entity-key">{{item.key.urlsafe() }}</div>
+                            <div class="hidden pupilName">{{item.name }}</div>
+                            <div class="hidden className">{{item.class_name}}</div>
+                            <div class="hidden level">{{item.level }}</div>
+                            <div class="hidden avatar"><img src="/img?img_id={{item.key.urlsafe()}}"/></div>
+                        </button>
+                        <button data-toggle="modal" data-target="#delete-pupil-modal" type="button"
+                                class="delete-pupil btn btn-xs btn-danger">
+                            <span class="glyphicon glyphicon-remove"></span>
 
-<!-- Modal -->
+                            <div class="hidden entity-key">{{item.key.urlsafe() }}</div>
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+        <div id="lesson-sidebar" class="list-group">
+            <a href="#" id="" class="sidebar-link list-group-item {% if not active_lesson %}active{% endif %}">Show
+                all pupils</a>
+            {% for lesson in lessons %}
+            <a href="#" id="{{ lesson.key.urlsafe() }}"
+               class="clearfix sidebar-link list-group-item {% if active_lesson == lesson.key.urlsafe() %}active{% endif %}">
+              <span class="badge">
+                {{ lesson_badge_data[lesson.key][0] }}
+              </span>
+
+                <span class="lesson-name">{{lesson.lesson_name}}</span>
+
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    </div>
+</article>
+    <!-- Pupil Modal -->
 <div class="modal fade" id="insert-pupil-modal" tabindex="-1" role="dialog" aria-labelledby="Insert Pupil" aria-hidden="true">
 <div class="modal-dialog">
 <div class="modal-content">
@@ -97,7 +126,7 @@
 </div>
 </div>
 </div>
-
+<!-- /.End of pupil modal -->
 <!-- Modal -->
 <div class="modal fade" id="delete-pupil-modal" tabindex="-1" role="dialog" aria-labelledby="Delete Pupil" aria-hidden="true">
 
@@ -121,6 +150,8 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+</body>
+</html>
 
 {% endblock %}
 

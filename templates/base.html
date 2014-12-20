@@ -99,8 +99,6 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a class="visible-md visible-lg" href="#">{{user_email}}</a></li>
                 <li><a href="{{ logout_url }}">Sign out</a></li>
-                <li></li>
-                <li><a id="toggle-edit" href="#">Edit</a></li>
             </ul>
 
         </div>
@@ -115,6 +113,186 @@
 </div>
 </body>
 
+
+<!-- Pupil Modal -->
+<div class="modal fade" id="insert-pupil-modal" tabindex="-1" role="dialog" aria-labelledby="Insert Pupil" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">
+    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+<h4 class="modal-title" id="myModalLabel">Add pupil</h4>
+</div>
+
+<form action="/insertpupil" method="POST" class="form-horizontal" role="form" enctype="multipart/form-data">
+<div class="modal-body">
+
+<input type="text" class="hidden" id="key" name="key" placeholder="Entity Key">
+
+<div class="form-group">
+<label for="name-input" class="col-sm-2 control-label">Name</label>
+<div class="col-sm-10">
+<input type="text" class="form-control" id="inputName" name="pupilName" placeholder="Pupil Name">
+</div>
+</div>
+<div class="form-group">
+<label for="class-input" class="col-sm-2 control-label">Class</label>
+<div class="col-sm-10">
+<input type="text" class="form-control" id="inputClass" name="className" placeholder="Class Name">
+</div>
+</div>
+<div class="form-group">
+<label for="level-input" class="col-sm-2 control-label">Level</label>
+<div class="col-sm-10">
+<input type="text" class="form-control" id="inputLevel" name="level" placeholder="Level">
+</div>
+</div>
+<div class="form-group">
+<label for="image-input" class="col-sm-2 control-label">Image</label>
+<div class="col-sm-10">
+<input type="file" class="form-control" id="inputAvatar" name="avatar" placeholder="path">
+</div>
+</div>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+<button type="submit" class="btn btn-primary">Add pupil</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+<!-- /.End of pupil modal -->
+
+
+<!-- Lesson Modal -->
+<div class="modal fade" id="insert-lesson-modal" tabindex="-1" role="dialog" aria-labelledby="Insert Lesson"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add lesson</h4>
+            </div>
+
+            <form action="/insertlesson" method="POST" class="form-horizontal" role="form"
+                  enctype="multipart/form-data">
+                <div class="modal-body">
+
+                    <input type="text" class="hidden" id="key" name="key" placeholder="Entity Key">
+
+                    <div class="form-group">
+                        <label for="topic-input" class="col-sm-2 control-label">Topic</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputTopic" name="lessonTopic"
+                                   placeholder="Lesson Topic">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lesson-name-input" class="col-sm-2 control-label">Lesson Name</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputLessonName" name="lessonName"
+                                   placeholder="Lesson Name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="criteria-input" class="col-sm-2 control-label">Criteria</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputCriteria" name="lessonCriteria"
+                                   placeholder="Lesson Criteria">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="resource-input" class="col-sm-2 control-label">Resource</label>
+
+                        <div class="col-sm-10">
+                            <input type="file" class="form-control" id="inputResource" name="lessonResource"
+                                   placeholder="path">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add lesson</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--End Of Lesson Modal -->
+
+<!-- Question Modal -->
+<div class="modal fade" id="insert-question-modal" tabindex="-1" role="dialog" aria-labelledby="Insert Question"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add question</h4>
+            </div>
+
+            <form action="/insertquestion" method="POST" class="form-horizontal" role="form"
+                  enctype="multipart/form-data">
+                <div class="modal-body">
+
+                    <input type="text" class="hidden" id="key" name="key" placeholder="Entity Key">
+
+                    <div class="form-group">
+                        <label for="lesson-input" class="col-sm-2 control-label">Lesson</label>
+
+                        <div class="col-sm-10">
+                            <select name="lesson_key" class="form-control">
+                                {% for lesson in lessons %}
+                                <option value="{{ lesson.key.urlsafe() }}">{{lesson.topic}} : {{lesson.lesson_name}}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="level-input" class="col-sm-2 control-label">Level</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputLevel" name="questionLevel"
+                                   placeholder="Question Level">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="question-body-input" class="col-sm-2 control-label">Body</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="questionBody" name="questionBody"
+                                   placeholder="Question Body">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="instructions-input" class="col-sm-2 control-label">Instructions</label>
+
+                        <div class="col-sm-10">
+                            <textarea rows="4" cols="50" class="form-control" id="questionInstructions"
+                                      name="questionInstructions"></textarea>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add question</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--End Of Question Modal -->
 
 
 {% block footer %}
