@@ -58,10 +58,13 @@ class PupilPage(webapp2.RequestHandler):
 class CurrentLessonPage(webapp2.RequestHandler):
   def get(self):
       user = users.get_current_user()
+      classes = utils.get_classes(user)
       lessons, lessons_map = utils.get_lessons(user)
       template = jinja_env.get_template("templates/index.html")
       self.response.out.write(template.render({'lessons': lessons,
                                              'user_email': user.email(),
+                                             'user_name': user.nickname(),
+                                             'classes': classes,
                                              'logout_url': users.create_logout_url("/")}))
 
 class QuestionPage(webapp2.RequestHandler):

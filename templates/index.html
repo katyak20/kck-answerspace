@@ -2,7 +2,25 @@
 {% block title %}Pupils{% endblock %}
 {% block head %}
     {{ super() }}
+<script>
 
+(function(window, document, undefined){
+
+var currentDate = new Date()
+var day = currentDate.getDay()
+var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+var date = currentDate.getDate()
+var month = currentDate.getMonth()
+var year = currentDate.getFullYear()
+window.onload = init;
+
+  function init(){
+    document.getElementById('current-date').innerHTML = days[day] + "  " + date +"-" +month +"-" + year
+  }
+
+})(window, document, undefined);
+
+</script>
 {% endblock %}
 {% block content %}
 
@@ -11,19 +29,29 @@
 <div data-spy="affix">
 
     <div class="well">
-				<p>Mrs Smith</p>
+				<p>{{user_name}}</p>
 				<p>St Trinian's</p>
 			</div>
-			<button class="btn btn-primary" id="SubmitComment">Logout</button>
+			<div class="alert alert-success" role="alert"><p id="current-date"></p> </div>
 			<div>
 				&nbsp;&nbsp;
 			</div>
 			<div class="well">
 				<h3>Class</h3>
-				Year 7 Ruby
+              <select name="class-name" class="form-control">
+                {% for item in classes %}
+                <option value="{{ item.key.urlsafe() }}">{{item.class_name}}
+                </option>
+                {% endfor %}
+              </select>
 				&nbsp;&nbsp;
 				<h3>Lesson</h3>
-				Computational Thinking 1
+				<select name="lesson-name" class="form-control">
+                {% for item in lessons %}
+                <option value="{{ item.key.urlsafe() }}">{{item.lesson_name}}
+                </option>
+                {% endfor %}
+              </select>
 			</div>
     </div>
 </div>

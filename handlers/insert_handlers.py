@@ -41,27 +41,32 @@ def get_parent_key(user):
     return ndb.Key("Entity", user.email().lower())
 
 class InsertSingleQuestionAction(webapp2.RequestHandler):
-  def post(self):
-    user = users.get_current_user()
-    urlsafe_lesson_key =self.request.get('lesson_key')
+    def post(self):
+       user = users.get_current_user()
+       if self.request.get("key"):
+            logging.info("URL safe = " + self.request.get("key"))
+            question_key = ndb.Key(urlsafe=self.request.get("key"))
+            logging.info("Sring rep of REAL key" + str(question_key))
+            question = question_key.get()
 
-    lesson_key=ndb.Key(urlsafe=self.request.get('lesson_key'))
-    question_number = 2
-    question_level = self.request.get("questionLevel")
-    question_body = self.request.get("questionBody")
-    question_instructions = self.request.get("questionInstructions")
-
-    new_question_entry = Question(parent=lesson_key,
-                                  question_number = question_number,
+            question.lesson_key=ndb.Key(urlsafe=self.request.get('lesson_key'))
+            question.question_level = self.request.get("questionLevel")
+            question.question_body = self.request.get("questionBody")
+            question.question_instructions = self.request.get("questionInstructions")
+            question.put()
+       else:
+            lesson_key=ndb.Key(urlsafe=self.request.get('lesson_key'))
+            logging.info("URL safe = " + self.request.get("key"))
+            new_question_entry = Question(parent=lesson_key,
+                                  question_number = 3,
                                   lesson_key = lesson_key,
-                                  question_level = question_level,
-                                  question_body = question_body,
-                                  question_instructions = question_instructions
+                                  question_level = self.request.get("questionLevel"),
+                                  question_body = self.request.get("questionBody"),
+                                  question_instructions = self.request.get("questionInstructions")
                                   )
-    new_question_entry.put()
-    logging.info("URL safe = " + lesson_key.urlsafe())
+            new_question_entry.put()
 
-    self.redirect(self.request.referer)
+       self.redirect(self.request.referer)
 
 class InsertLessonAction(webapp2.RequestHandler):
     def post(self):

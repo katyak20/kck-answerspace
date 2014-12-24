@@ -41,6 +41,10 @@ def get_questions(user,  Lesson):
     questions_map[question.key()] = question
   return questions, questions_map
 
+def get_classes(user):
+  classes = Pupil.query(projection=[Pupil.class_name],distinct=True)
+  return classes
+
 def get_pupils(user):
   pupils = Pupil.query(ancestor=get_parent_key(user)).order(Pupil.username).fetch()
   pupils_map = {}

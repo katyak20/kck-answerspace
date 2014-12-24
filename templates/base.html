@@ -42,16 +42,16 @@
 
 
                 {% set navigation_bar = [
-                ('/', 'lesson', 'Lesson'),
+                ('/', 'currentlesson', 'Lesson'),
                 ('/questions', 'questions', 'Questions'),
-                ('/pupils', 'PupilPage', 'Pupils'),
-                ('/lessons', 'LessonsPage', 'Lessons')
+                ('/pupils', 'pupilpage', 'Pupils'),
+                ('/lessons', 'lessonspage', 'Lessons')
                 ] -%}
                 {% set dropdown_questions_menu =[
                 ('/questions', 'questions', 'Questions'),
                 ('/add_question', 'add_question', 'Add Question')
                 ] -%}
-                {% set active_page = active_page|default('lesson') -%}
+                {% set active_page = active_page|default('currentlesson') -%}
                 ...
             <ul class="nav navbar-nav">
                 {% for href, id, caption in navigation_bar %}
