@@ -136,6 +136,22 @@ class DeleteLessonAction(webapp2.RequestHandler):
         lesson_key.delete()
         self.redirect(self.request.referer)
 
+class CurrentLessonAction(webapp2.RequestHandler):
+    def get(self):
+        user = users.get_current_user()
+        classes = utils.get_classes(user)
+        lessons, lessons_map = utils.get_lessons(user)
+        logging.info(" Current LESSON" + self.request.get("lesson"))
+        lesson_key=ndb.Key(urlsafe=self.request.get("lesson"))
+        questions_for_lesson_query = Question.query(ancestor=lesson_key)
+        template = jinja_env.get_template("templates/index.html")
+        self.response.out.write(template.render({'lessons': lessons,
+                                             'user_email': user.email(),
+                                             'user_name': user.nickname(),
+                                             'classes': classes,
+                                             'logout_url': users.create_logout_url("/"),
+                                             'questions_for_lesson': questions_for_lesson_query}))
+
 
 application = webapp2.WSGIApplication([
     ('/', CurrentLessonPage),
@@ -147,5 +163,6 @@ application = webapp2.WSGIApplication([
     ('/deletepupil', DeletePupilAction),
     ('/insertlesson', insert_handlers.InsertLessonAction),
     ('/deletelesson', DeleteLessonAction),
+    ('/get_questions_for_the_lesson', CurrentLessonAction),
     ('/img', Thumbnailer),
 ], debug=True)

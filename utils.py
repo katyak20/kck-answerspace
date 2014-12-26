@@ -18,7 +18,6 @@ def get_parent_key(user):
   return ndb.Key("Entity", user.email().lower())
 
 def get_lessons(user):
-
   lessons = Lesson.query(ancestor=get_parent_key(user)).order(Lesson.topic)
   lessons_map = {}
   for lesson in lessons:

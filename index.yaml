@@ -13,6 +13,11 @@ indexes:
 - kind: Lesson
   ancestor: yes
   properties:
+  - name: lesson_name
+
+- kind: Lesson
+  ancestor: yes
+  properties:
   - name: topic
 
 - kind: Lesson
@@ -20,6 +25,11 @@ indexes:
   properties:
   - name: topic
   - name: lesson_name
+
+- kind: Pupil
+  ancestor: yes
+  properties:
+  - name: class_name
 
 - kind: Pupil
   ancestor: yes
