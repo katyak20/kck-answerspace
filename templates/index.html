@@ -48,14 +48,14 @@ window.onload = init;
       &nbsp;&nbsp;
       <h3>Lesson</h3>
 
-      <form action="/get_questions_for_the_lesson" method="GET" name="currentLessonForm">
-        <select name="lesson" id="lessonKey" class="form-control" onchange="this.form.submit();">
+
+        <select name="lesson" id="lessonKey" class="form-control">
           {% for item in lessons %}
           <option value="{{ item.key.urlsafe() }}">{{item.lesson_name}}
           </option>
           {% endfor %}
         </select>
-      </form>
+
     </div>
     </div>
   </div>
@@ -93,6 +93,7 @@ window.onload = init;
   </div>
 {% endfor %}
     </div>
+  <div id="json-container"></div>
 </div>
 </div>
 
@@ -115,7 +116,11 @@ window.onload = init;
 			</div>
 		</div>
 	</div><!-- end of modal body -->
-	
+
 </div>
 {% endblock %}
+{% block footer %}
+    {{ super() }}
 
+<script src="/static/js/current_lesson.js"></script>
+{% endblock %}

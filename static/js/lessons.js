@@ -66,6 +66,7 @@ rh.mq.enableButtons = function() {
 /** main */
 
 $(document).ready( function() {
+    console.log("HEllo JSON");
     rh.mq.enableButtons();
     rh.mq.attachEventHandlers();
 });

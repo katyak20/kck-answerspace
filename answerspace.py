@@ -11,6 +11,7 @@ from google.appengine.api import images
 import jinja2
 import webapp2
 import logging
+import json
 
 from handlers import insert_handlers
 from models import *
@@ -152,6 +153,23 @@ class CurrentLessonAction(webapp2.RequestHandler):
                                              'logout_url': users.create_logout_url("/"),
                                              'questions_for_lesson': questions_for_lesson_query}))
 
+class CurrentLessonJsonData(webapp2.RequestHandler):
+    def get(self):
+        self.response.headers["Content-Type"] = "application/json"
+        logging.info(" Current LESSON" + self.request.get("lessonKey"))
+        lesson_key= ndb.Key(urlsafe=self.request.get("lessonKey"))
+        questions_for_lesson_query = Question.query(ancestor=lesson_key).get()
+        response = {"message": "HelloAjax!!"}
+        self.response.out.write(questions_for_lesson_query.to_dict())
+
+
+class ServerTime(webapp2.RequestHandler):
+    def get(self):
+        self.response.headers["Content-Type"] = "application/json"
+        #self.response.headers.add_header("Access-Control-Allow-Origin", "*")
+
+        response = {"message": "Hello AJAX!"}
+        self.response.out.write(json.dumps(response))
 
 application = webapp2.WSGIApplication([
     ('/', CurrentLessonPage),
@@ -163,6 +181,6 @@ application = webapp2.WSGIApplication([
     ('/deletepupil', DeletePupilAction),
     ('/insertlesson', insert_handlers.InsertLessonAction),
     ('/deletelesson', DeleteLessonAction),
-    ('/get_questions_for_the_lesson', CurrentLessonAction),
+    ('/get_questions_for_the_lesson', CurrentLessonJsonData),
     ('/img', Thumbnailer),
 ], debug=True)
