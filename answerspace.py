@@ -158,9 +158,12 @@ class CurrentLessonJsonData(webapp2.RequestHandler):
         self.response.headers["Content-Type"] = "application/json"
         logging.info(" Current LESSON" + self.request.get("lessonKey"))
         lesson_key= ndb.Key(urlsafe=self.request.get("lessonKey"))
-        questions_for_lesson_query = Question.query(ancestor=lesson_key).get()
-        response = {"message": "HelloAjax!!"}
-        self.response.out.write(questions_for_lesson_query.to_dict())
+        questions_for_lesson_query = Question.query(ancestor=lesson_key)
+        questions_map = []
+        for question_entry in questions_for_lesson_query:
+            questions_map.append({'question_key':question_entry.key.urlsafe(), 'body':question_entry.question_body, 'instructions':question_entry.question_instructions})
+        response = {"questions": "HEllo"}
+        self.response.out.write((json.dumps(questions_map)))
 
 
 class ServerTime(webapp2.RequestHandler):

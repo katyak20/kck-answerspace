@@ -10,14 +10,14 @@ rh.mq.currentLessonKey = null;
 rh.mq.selectListener = function() {
 $('#lessonKey').change( function() {
       var lessonValue = $('#lessonKey').val();
-      $.getJSON("/get_questions_for_the_lesson",{"lessonKey":lessonValue}).done(function(json) {
-          $("#json-container").append( JSON.stringify(json));
-          $("#json-container").append(lessonValue);
+      $.getJSON("/get_questions_for_the_lesson", {'lessonKey': lessonValue}).done(function(json) {
 
-      }).fail(function(jqxhr, textStatus, error) {
-          $("#json-container").append("GET JSON Request Failed: " + textStatus + ", " + error);
-          $("#json-container").append(lessonValue);
-      });
+          $('#json-container').append(JSON.stringify(json));
+
+         })
+         .fail(function(jqxhr, textStatus, error) {
+           console.log("GET JSON Request Failed: " + textStatus + ", " + error);
+         });
   });
 };
 
